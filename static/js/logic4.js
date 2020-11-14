@@ -80,44 +80,46 @@ function createMap(earthquakes) {
             37.09, -95.71
         ],
         zoom: 5,
-        layers: [streetmap, earthquakes]
+        layers: [streetmap, earthquakes],
+
     });
 
     // Create a layer control - this is the selection box in the corner
     // Pass in our baseMaps and overlayMaps
     // Add the layer control to the map
     L.control.layers(baseMaps, overlayMaps, {
-        collapsed: false
+        collapsed: false,
+        
     }).addTo(myMap);
-
-function getColor(d) {
-    return d > 35 ? '#00441b' :
-        d > 30 ? '#006d2c' :
-            d > 25 ? '#238b45' :
-                d > 20 ? '#41ab5d' :
-                    d > 15 ? '#74c476' :
-                        d > 10 ? '#a1d99b' :
-                            d > 5 ? '#c7e9c0' :
-                                d > 1 ? '#e5f5e0' :
-                                    '#f7fcf5';
+    
+function getColor2(d) {
+    return  d > 35  ? '#00441b' :
+            d > 30  ? '#006d2c' :
+            d > 25  ? '#238b45' :
+            d > 20  ? '#41ab5d' :
+            d > 15  ? '#74c476' :
+            d > 10  ? '#a1d99b' :
+            d > 5   ? '#c7e9c0' :
+            d > 1   ? '#e5f5e0' :
+                        '#f7fcf5';
 }
     var legend = L.control({ position: 'bottomright' });
-    legend.onAdd = function () {
+    legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend');
-        labels = ['<strong>Depths of Earthquakes (km)</strong>'],
-        categories = ['Less than 1', '1-5', '6-10', '11-15', '16-20', '21-25', '26-30', '31-35'];
+            labels = ['<strong>Depths of Earthquakes (km)</strong>'],
+            categories = ['Greater Than 35','31-35','26-30','21-25','16-20','11-15','6-10','1-5','Less than 1'];
 
-        for (var i = 0; i < categories.length; i++) {
+                for (var i = 0; i < categories.length; i++) {
 
-            div.innerHTML +=
-            labels.push(
-                '<i class="circle" style="background:' + getColor(categories[i]) + '"></i> ' +
-            (categories[i] ? categories[i] : '+'));
+                    div.innerHTML +=
+                    '<i style="background:' + getColor2(categories[i]+1) + '"></i> ' +
+                    (categories[i] ? categories[i] + '<br>' : '+');
 
         }
-        div.innerHTML = labels.join('<br>');
+        
         return div;
     };
     legend.addTo(myMap);
 }
+
